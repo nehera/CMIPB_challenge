@@ -1,0 +1,85 @@
+ Subject specimen dataframe (Meta data)
+ Description of columns 
+ specimen_id : ID for a clinical sample for a patient 
+ subject_id : unique ID for patient
+ actual_day_relative_to_boost :  days relative to day booster given when specimen was collected
+ planned_day_relative_to_boost:  days relative to day booster given when specimen was *planned* to be collected
+ specimen_type: type of biological sample - all "Blood"
+ visit: visit number for that patient - range from 1-11
+ infancy_vac: which vaccine was given at birth (wP if born <= 1995, or aP if born > 1995)
+ biological_sex: reported biological sex of patient
+ ethnicity: reported ethnicity of patient (Unknown, Hispanic or Latino, Not Hispanic or Latino, etc)
+ race: reported race of patient                       
+ year_of_birth: patient birth date            
+ date_of_boost: date that booster vaccine given (2016-2019)               
+ dataset: dataset that this patient's biological samples are in (2020 or 2021)
+ timepoint: time point in days (also relative to date that booster was given - this will be the same as "planned day relative to boost"
+
+Summaries:
+There are 96 unique subjects. 
+There are 729 unique speciments. 
+Not all subjects have the same number of specimens/visits! This is potentially why theres different 
+numbers of columns or rows corresponding to different data types (titers, cell freq, etc.)? 
+
+
+ AB Titer Wide dataframe
+ 
+ This contains 2 dataframes and 2 matrices
+ 1. Meta data: this is the same as the "subject specimen dataframe" 
+ 2. Raw data: Specimen ID as row, columns are RAW values of 27 antibody titers in MFI (mean fluorescence intensity units)
+ 3. Normalised data: This is a matrix where one row is an antibody, and column names represent Speciment ID, values are normalised
+ 4. Batch corrected data: This is a matrix where one row is an antibody, and column names represent Speciment ID, values are batch corrected 
+ (Not sure what methods they used for normalising/ batch correction, but I would guess the batch corrected data matrix is the one we want to work with, ultimately)
+
+Plasma cytokine concentrations
+This list contains one dataframes and 2 matrices
+
+1. Meta data: this is the same as the "subject specimen dataframe" 
+2. Normalised data matrix: 30x270. Rows are protein identifiers, columns are specimen ID? 
+3. Batch corrected data matrix: 30x270. Rows are protein identifiers, columns are specimen ID? 
+
+PBMC cell frequency 
+This list contains two dataframes and 2 matrices
+
+1. Meta data: this is the same as the "subject specimen dataframe" 
+2. Raw data: Each row is a specimen, columns contain cell counts of different types of cells 
+3. Normalised data matrix: 20x265. Rows are types of cells, columns are specimen ID 
+4. Batch corrected data matrix: 20x265. Rows are types of cells, columns are specimen ID
+
+ PBMC gene expression 
+This list contains one dataframes and 2 matrices
+1. Meta data: this is the same as the "subject specimen dataframe" 
+2. Raw data matrix: 8242 x 360. Rows are transcripts, columns are specimens, values are gene expression
+3. Batch corrected data matrix: 8242 x 360. Rows are transcripts, columns are specimens, values are gene 
+expression with batch corrected values 
+
+ 
+ 
+ 
+**************************************************************************************************** 
+master_harmonized_training_data
+
+
+  subject_specimen: same as processed training data
+
+
+  plasma_antibody_levels
+  
+    wide: normalized MFI values with 1 row per specimenid (625), column for each of the 27 antibodies
+          so 625x27 = 16875 total rows
+    
+    long: 1 row per specimen_id + isotype_antigen
+        specimen_id: specimen ID
+        is_antigen_specific: T/F, ?
+        MFI: raw MFI value for the corresponding antibody
+        MFI_normalised: normalized MFI value for the corresponding antibody
+        unit: unit for the value; this corresponds with is_antigen_specific
+                 IU/ML if is_antigen_specific==TRUE
+                 MFI if is_antigen_specific==FALSE
+        lower_limit_of_detection: ?
+        isotype_antigen: name of antibody 
+        
+        
+        
+
+
